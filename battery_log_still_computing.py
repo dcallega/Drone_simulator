@@ -15,7 +15,7 @@ def exp_avg(list, alpha=0.5):
 
 
 def image_analysis(occ_fract=1):
-    img = cv2.imread("../img/faces.jpg")
+    img = cv2.imread("img/faces.jpg")
     face_cascade = cv2.CascadeClassifier('haar_frontal_face.xml')
     time2det = [None]*3
 
@@ -34,7 +34,11 @@ def image_analysis(occ_fract=1):
             time.sleep(exp_avg(time2det))
 
 
-batt_log_file = open('logs/batt_fly_still_computing_' + str(time.time()) + '.csv', "w", 0)
+MODE = "STILL_COMPUTING"
+
+batt_log_file = open('logs/batt_fly_still_' + str(time.time()) + '.csv', "w", 0)
+batt_log_file.write("#" + ",".join([MODE, str(0), str(0)]) + "\n")
+batt_log_file.write(",".join(["Time", "Voltage", "Current", "Level"]) + "\n")
 
 v = connect('/dev/ttyUSB0', baud=57600, wait_ready=True, vehicle_class=MyVehicle)
 
